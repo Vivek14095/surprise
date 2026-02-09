@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>surprise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+body{margin:0;font-family:'Segoe UI',sans-serif;overflow-x:hidden}
+.hidden{display:none}
+
+/* START SCREEN */
+#startBox{height:100vh;background:white;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center}
+.gift{width:160px;height:160px;border-radius:20px;background:linear-gradient(#ff4d6d,#c9184a);position:relative;box-shadow:0 10px 30px rgba(0,0,0,.3);animation:pulse 2s infinite}
+.gift:before{content:'';position:absolute;width:100%;height:20px;background:white;top:70px}
+.gift:after{content:'';position:absolute;height:100%;width:20px;background:white;left:70px}
+.sparkle{position:absolute;width:6px;height:6px;background:#ffd166;border-radius:50%;animation:sparkle 1.5s infinite}
+@keyframes sparkle{0%{opacity:0}50%{opacity:1}100%{opacity:0}}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+#startBox button{margin-top:25px;padding:10px 22px;border-radius:25px;border:none;background:#ff4d6d;color:white;font-size:16px;cursor:pointer}
+
+/* MAIN SITE */
+#main{background:radial-gradient(circle at top,#ff4d6d,#8b0000);color:white}
+header{text-align:center;padding:60px 20px}
+header h1{font-size:3rem;margin:0}
+section{padding:40px 20px;text-align:center}
+.card{background:rgba(255,255,255,.1);backdrop-filter:blur(8px);padding:25px;border-radius:20px;max-width:700px;margin:30px auto}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;max-width:900px;margin:auto}
+.gallery img{width:100%;border-radius:18px;box-shadow:0 12px 25px rgba(0,0,0,.4);border:4px solid rgba(255,255,255,.4)}
+button{background:#ff2f5b;border:none;color:white;padding:12px 22px;border-radius:30px;font-size:1rem;cursor:pointer}
+footer{text-align:center;padding:40px;opacity:.8}
+.heart{position:fixed;color:#ffccd5;font-size:18px;animation:float 6s linear infinite}
+@keyframes float{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-100vh);opacity:0}}
+#popup{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center}
+#popup .card{max-width:400px}
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="startBox">
+<div class="gift">
+<div class="sparkle" style="top:10px;left:20px"></div>
+<div class="sparkle" style="top:30px;right:25px"></div>
+<div class="sparkle" style="bottom:20px;left:40px"></div>
+<div class="sparkle" style="bottom:30px;right:30px"></div>
+</div>
+<p>Tap the box</p>
+<button onclick="startSurprise()">Open</button>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main" class="hidden">
+<header>
+<h1>Happy Birthday Parul ❤️</h1>
+</header>
+
+<section class="card">
+<h2>💌 A Small Note</h2>
+<p id="typing"></p>
+</section>
+
+<section>
+<h2>📸 Inside My Heart</h2>
+<div class="gallery">
+<!-- IMPORTANT: save her photos in same folder as this file and rename like below -->
+<img src="parul1.jpg" />
+<img src="parul2.jpg" />
+<img src="parul3.jpg" />
+<img src="parul4.jpg" />
+</div>
+</section>
+
+<section class="card">
+<h2>🎁 One More Thing</h2>
+<button onclick="openPopup()">Open My Heart</button>
+</section>
+
+<footer>Made with ❤️ just for Parul</footer>
+</div>
+
+<div id="popup">
+<div class="card">
+<h2>🙂 Just Saying</h2>
+<p>I’d really like to spend more time with you, make memories together, and see where this goes. 💕<br><br><b>Will you be my Valentine? 💘🌹</b></p>
+<button onclick="closePopup()">Yes ❤️</button>
+</div>
+</div>
+
+<script>
+const noteText = "Parul, it hasn’t been long, but I already enjoy talking to you, laughing with you, and getting to know you. You make things feel lighter, and I genuinely like having you around. I’m happy we found each other. I also know I couldn’t give you all the gifts you deserve right now and I’m not with you on your birthday to give you one, but that doesn’t mean I don’t want to. It’s just the situation right now 😔 I’m sorry.";
+let i=0;
+
+function typeText(){
+ if(i<noteText.length){
+  document.getElementById('typing').innerHTML += noteText.charAt(i);
+  i++;
+  setTimeout(typeText,40);
+ }
+}
+
+function startSurprise(){
+ document.getElementById('startBox').style.display='none';
+ document.getElementById('main').classList.remove('hidden');
+ typeText();
+}
+
+function openPopup(){document.getElementById('popup').style.display='flex'}
+function closePopup(){document.getElementById('popup').style.display='none'}
+
+setInterval(()=>{
+ const h=document.createElement('div');
+ h.className='heart';
+ h.innerHTML='❤';
+ h.style.left=Math.random()*100+'vw';
+ h.style.bottom='-20px';
+ h.style.fontSize=(12+Math.random()*25)+'px';
+ document.body.appendChild(h);
+ setTimeout(()=>h.remove(),6000);
+},400);
+</script>
+
+<!-- Chocolate Popup -->
+<style>
+.float-choco{position:fixed;font-size:32px;animation:floatUp 4s linear forwards;pointer-events:none;z-index:9999}
+@keyframes floatUp{from{bottom:-40px;opacity:0;transform:scale(.6)}50%{opacity:1}to{bottom:110%;opacity:0;transform:scale(1)}}
+</style>
+
+<div id="choco" style="position:fixed;bottom:30px;right:30px;font-size:60px;opacity:0;transform:scale(0.5);transition:all .6s ease;pointer-events:none;z-index:9999">🍫</div>
+
+<script>
+function launchChocolates(){
+ const c=document.getElementById('choco');
+ if(c){c.style.opacity='1';c.style.transform='scale(1)';}
+ for(let i=0;i<7;i++){
+   const f=document.createElement('div');
+   f.className='float-choco';
+   f.textContent='🍫';
+   f.style.left=Math.random()*90+'%';
+   f.style.animationDelay=(i*0.3)+'s';
+   document.body.appendChild(f);
+   setTimeout(()=>f.remove(),4500);
+ }
+}
+
+// Try to detect end of typing in small note
+const noteEl=document.getElementById('small-note')||document.getElementById('note')||document.querySelector('.small-note');
+if(noteEl){
+ const obs=new MutationObserver(()=>{
+   if(noteEl.textContent.trim().length>20){ // typing likely finished
+     launchChocolates();
+     obs.disconnect();
+   }
+ });
+ obs.observe(noteEl,{childList:true,subtree:true,characterData:true});
+}else{
+ // fallback if note element not found
+ setTimeout(launchChocolates,4000);
+}
+</script>
+
+</body>
+</html>
